@@ -1,6 +1,7 @@
 package edu.spring.td1.controller
 
 import edu.spring.td1.models.Item
+import edu.spring.td1.Service.*
 import org.springframework.stereotype.*
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.RequestMapping
@@ -25,7 +26,7 @@ class ItemsController {
         }
 
     @RequestMapping("/")
-    fun indexAction(@RequestAttribute("msg") msg:String?):String{
+    fun indexAction(@RequestAttribute("msg") msg:UIMessage.Message?):String{
         return "index"
     }
 
@@ -36,9 +37,14 @@ class ItemsController {
 
     @PostMapping("/addNew")
     fun addNewAction(@ModelAttribute("nom") nom:String, @SessionAttribute("items") items:HashSet<Item>, attrs:RedirectAttributes):RedirectView{
-        items.add(Item(nom))
-        attrs.addFlashAttribute("msg", "$nom a été ajouté avec succès :)")
+       if (items.add(Item(nom))){
+        attrs.addFlashAttribute("msg", edu.spring.td1.Service.UIMessage.Companion.message("Ajout item", "$nom a été ajouté avec succès :)"))
         return RedirectView("/")
+           }
+        else{
+           attrs.addFlashAttribute("msg", edu.spring.td1.Service.UIMessage.Companion.message("Echec ajout", "$nom déjà existant"))
+           return RedirectView("/")
+       }
     }
 
 }
