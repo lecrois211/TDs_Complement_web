@@ -47,4 +47,62 @@ class ItemsController {
        }
     }
 
+    @PostMapping("/suppress")
+    fun suppItem(@ModelAttribute("nom") nom:String, @SessionAttribute("items") items:HashSet<Item>, attrs: RedirectAttributes):RedirectView {
+        if (items.remove(Item(nom))) {
+            attrs.addFlashAttribute(
+                "msg",
+                edu.spring.td1.Service.UIMessage.Companion.message(
+                    "Suppression item",
+                    "$nom a été supprimé avec succès :)"
+                )
+            )
+            return RedirectView("/")
+        } else {
+            attrs.addFlashAttribute(
+                "msg",
+                edu.spring.td1.Service.UIMessage.Companion.message(
+                    "Echec suppression",
+                    "$nom n'est pas dans la liste d'objets"
+                )
+            )
+            return RedirectView("/")
+        }
+    }
+
+    @RequestMapping("/supp")
+    fun suppAction():String{
+        return "SuppForm"
+    }
+
+    @RequestMapping("/modif")
+    fun modifAction():String{
+        return "ModifForm"
+    }
+
+    @PostMapping("/modification")
+    fun modifItem(@ModelAttribute("ancienNom") ancienNom:String, @ModelAttribute("nouveauNom") nouveauNom:String, @SessionAttribute("items") items:HashSet<Item>, attrs: RedirectAttributes):RedirectView{
+        if(items.remove(Item(ancienNom)) && items.add(Item(nouveauNom))) {
+                attrs.addFlashAttribute(
+                    "msg",
+                    edu.spring.td1.Service.UIMessage.Companion.message(
+                        "Succès Modification :)",
+                        "modification apportée avec succès ($ancienNom est devenu $nouveauNom)"
+                    )
+                )
+                return RedirectView("/")
+            }
+        else {
+            attrs.addFlashAttribute(
+                "msg",
+                edu.spring.td1.Service.UIMessage.Companion.message(
+                    "Echec modification",
+                    "$ancienNom n'est pas dans la liste d'objets / $nouveauNom existe déja"
+                )
+            )
+            return RedirectView("/")
+        }
+    }
+
+
 }

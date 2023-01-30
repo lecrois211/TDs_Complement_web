@@ -1,6 +1,5 @@
 package edu.spring.td1.Service
 
-import javax.swing.Icon
 
 class UIMessage {
 
