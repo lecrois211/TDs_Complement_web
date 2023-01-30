@@ -2,6 +2,7 @@ package edu.spring.td1.controller
 
 import edu.spring.td1.models.Item
 import edu.spring.td1.Service.*
+import edu.spring.td1.models.Category
 import org.springframework.stereotype.*
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.*
 
 
 @Controller
-@SessionAttributes("items")
+@SessionAttributes("items", "categories")
 class ItemsController {
 
     @get:ModelAttribute("items")
@@ -23,6 +24,22 @@ class ItemsController {
             items.add(Item("Foo"))
             items.add(Item("aaa"))
             return items
+        }
+    @get:ModelAttribute("categories")
+    val Category: Set<Category>
+        get(){
+            var categories = HashSet<Category>()
+            var Famille = Category("Famille")
+            Famille.addItem(Item("foo"))
+            Famille.addItem(Item("oui"))
+            var Amis = Category("Amis")
+            Amis.addItem(Item("paluc"))
+            var Professionnels = Category("Professionnels")
+            Professionnels.addItem(Item("jfa"))
+            categories.add(Famille)
+            categories.add(Amis)
+            categories.add(Professionnels)
+            return categories
         }
 
     @RequestMapping("/")

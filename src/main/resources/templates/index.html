@@ -14,8 +14,13 @@
 
 
 <ul>
-    {{#items}}
-    <li>{{nom}}</li>
-{{/items}}
+    {{#categories}}
+    <li>{{label}}</li>
+        <ul>
+        {{#items}}
+        <li>{{nom}}</li>
+        {{/items}}
+        </ul>
+    {{/categories}}
 </ul>
 {{> include/footer }}
