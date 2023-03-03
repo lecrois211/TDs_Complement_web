@@ -3,8 +3,7 @@ package edu.spring.dogs
 import edu.spring.dogs.controllers.MainController
 import edu.spring.dogs.entities.Dog
 import edu.spring.dogs.entities.Master
-import edu.spring.dogs.repositories.DogRepository
-import edu.spring.dogs.repositories.MasterRepository
+import edu.spring.dogs.repositories.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.`when`
@@ -55,8 +54,8 @@ class MainControllerTest {
 
     @Test
     fun displayOneUserWithOneDog() {
-        val master=Master("Bob", "MockDuke")
-        val dog=Dog("MockDog")
+        val master= Master("Bob", "MockDuke")
+        val dog= Dog("MockDog")
         master.dogs.add(dog)
         `when`(masterRepository.findAll()).thenReturn(listOf(master))
         `when`(dogRepository.findAll()).thenReturn(listOf(dog))
@@ -69,9 +68,9 @@ class MainControllerTest {
 
     @Test
     fun displayOneUserWithOneDogAndOneSPADog() {
-        val master=Master("Bob", "MockDuke")
-        val dog=Dog("MockDog")
-        val dogSolo=Dog("MockDogSolo")
+        val master= Master("Bob", "MockDuke")
+        val dog= Dog("MockDog")
+        val dogSolo= Dog("MockDogSolo")
         master.dogs.add(dog)
         `when`(masterRepository.findAll()).thenReturn(listOf(master))
         `when`(dogRepository.findAll()).thenReturn(listOf(dog, dogSolo))
@@ -85,9 +84,9 @@ class MainControllerTest {
 
     @Test
     fun displayOneUserWithOneDogAndRemoveUser() {
-        val master=Master("Bob", "MockDuke")
+        val master= Master("Bob", "MockDuke")
         master.id=1000
-        val dog=Dog("MockDog")
+        val dog= Dog("MockDog")
         master.dogs.add(dog)
         `when`(masterRepository.findAll()).thenReturn(listOf(master))
         this.mockMvc.perform(

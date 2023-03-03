@@ -2,8 +2,7 @@ package edu.spring.dogs
 
 import edu.spring.dogs.entities.Dog
 import edu.spring.dogs.entities.Master
-import edu.spring.dogs.repositories.DogRepository
-import edu.spring.dogs.repositories.MasterRepository
+import edu.spring.dogs.repositories.*
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,8 +16,8 @@ class MasterRepositoryTest {
     @Autowired
     lateinit var dogRepository: DogRepository
 
-    private fun createMasterWithDogs():Master{
-        var master=Master("John","DOE")
+    private fun createMasterWithDogs(): Master {
+        var master= Master("John","DOE")
         master.id=1000
         master.addDog(Dog("Rex"))
         master.addDog(Dog("Sultan"))
@@ -33,7 +32,7 @@ class MasterRepositoryTest {
 
     @Test
     fun addMaster(){
-        var master=Master("John","DOE")
+        var master= Master("John","DOE")
         master=masterRepository.save(master)
         assert(masterRepository.count()==1L)
         Assertions.assertThat(master).hasFieldOrPropertyWithValue("firstname", "John")
