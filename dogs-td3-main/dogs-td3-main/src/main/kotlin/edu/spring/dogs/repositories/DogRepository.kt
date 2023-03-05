@@ -6,8 +6,8 @@ import edu.spring.dogs.entities.Dog
 
 @Repository
 interface DogRepository : CrudRepository<Dog, Int> {
-    abstract fun findByMasterIsNull(): List<Dog>
-    abstract fun findByNameAndMasterId(s: String, id: Int): Dog
+    fun findByMasterIsNull(): List<Dog>
+    fun findByNameAndMasterId(s: String, id: Int): Dog?
 
 
 }

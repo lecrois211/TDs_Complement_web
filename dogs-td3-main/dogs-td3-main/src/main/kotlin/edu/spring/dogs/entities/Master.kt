@@ -26,7 +26,7 @@ open class Master(){
     open lateinit var dogs : MutableSet<Dog>
 
     public fun addDog(chien: Dog) : Boolean{
-        if (this.dogs.contains(chien) == false){
+        if (!this.dogs.contains(chien)){
             this.dogs += chien
             chien.master = this
             return true

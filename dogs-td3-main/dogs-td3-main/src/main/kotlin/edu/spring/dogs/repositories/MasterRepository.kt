@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MasterRepository : CrudRepository<Master, Int> {
-    abstract fun findByDogsName(s: String): MutableList<Master>
+    fun findByDogsName(s: String): MutableList<Master>
 }
