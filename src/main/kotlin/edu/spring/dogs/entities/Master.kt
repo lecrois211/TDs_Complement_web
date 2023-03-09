@@ -1,6 +1,7 @@
 package edu.spring.dogs.entities
 
 import jakarta.persistence.*
+import net.minidev.json.annotate.JsonIgnore
 
 
 @Entity
