@@ -1,7 +1,6 @@
 package edu.spring.dogs.entities
 
 import jakarta.persistence.*
-import net.minidev.json.annotate.JsonIgnore
 
 
 @Entity
@@ -20,7 +19,7 @@ open class Master() {
     @Column(length = 30)
     open var lastname: String? = null
 
-    @OneToMany(mappedBy = "master", cascade = [CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH])
+    @OneToMany(mappedBy = "master", cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     open val dogs= mutableSetOf<Dog>()
 
     fun addDog(dog:Dog):Boolean {
