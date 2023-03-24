@@ -1,3 +1,27 @@
 {{> main/header }}
-
+<span class="ui huge blue text">
+{{CurrentDomain}}
+</span>
+<div class="ui cards">
+{{#domains}}
+    <div class="card">
+        <div class="content">
+            <div class="header">{{name}}</div>
+            <div class="meta">
+                {{providers.size}} providers
+            </div>
+            <div class="description">
+                {{description}}
+                <div class="ui label">
+                {{Complaints.size}}
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached button">
+            <i class="folder open icon"></i>
+            Open
+        </div>
+    </div>
+{{/domains}}
+</div>
 {{> main/footer }}
