@@ -1,11 +1,11 @@
-package edu.spring.dogs
+package edu.spring.btp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DogsApplication
+class BtpApplication
 
 fun main(args: Array<String>) {
-    runApplication<DogsApplication>(*args)
+    runApplication<BtpApplication>(*args)
 }

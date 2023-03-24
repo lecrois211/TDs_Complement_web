@@ -1,9 +1,8 @@
-# dogs-td3
-Master &amp; dogs for TD3
+# btp-td
+BTP for CTD
 
 ## Consignes :
-- Instructions dans [README.pdf](https://github.com/s4-dut-info/dogs-td3/blob/main/README.pdf)
-- **Respecter impérativement les nommages indiqués, sinon, les tests ne passeront pas.**
+- Instructions dans [README.pdf](https://github.com/s4-dut-info/btp-td1/blob/main/README.pdf).
+- Respecter les URLs définies.
 - Commiter régulièrement.
-- **Mettre votre repository en private (Dans le bas des settings)**
-
+- **Mettre votre repository en private (Dans le bas des settings)**.
