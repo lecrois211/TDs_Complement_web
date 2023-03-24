@@ -1,6 +1,7 @@
 package edu.spring.btp.repositories
 
 import edu.spring.btp.entities.Domain
+import jakarta.persistence.Id
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
@@ -12,5 +13,12 @@ interface DomainRepository:JpaRepository<Domain, Int> {
     fun getRandomDomainFromProvider(providerId:Int): Domain
 
     fun findByParentName(name:String):List<Domain>
+
+    fun findByName(name: String):Domain
+
+    fun findByParentIsNull():List<Domain>
+
+    fun findByParentId(id:Id):List<Domain>
+
 
 }

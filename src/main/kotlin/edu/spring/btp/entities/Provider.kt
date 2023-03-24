@@ -3,7 +3,7 @@ package edu.spring.btp.entities
 import jakarta.persistence.*
 
 @Entity
-class Provider() {
+open class Provider() {
     constructor(rs: String) : this() {
         this.rs = rs
     }
