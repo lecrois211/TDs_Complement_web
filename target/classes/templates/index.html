@@ -2,6 +2,17 @@
 <span class="ui huge blue text">
 {{CurrentDomain}}
 </span>
+<span class="ui blue text">
+    <h2>Nombre de domaine(s) : {{count}}</h2>
+</span>
+{{#domainParent}}
+<a href="/domain/{{domainParent}}">
+<button class="ui right labeled icon button">
+    <i class="left arrow icon"></i>
+    retour
+</button>
+</a>
+{{/domainParent}}
 <div class="ui cards">
 {{#domains}}
     <div class="card">
@@ -12,15 +23,20 @@
             </div>
             <div class="description">
                 {{description}}
+                <a href="/complaints/{{name}}">
                 <div class="ui label">
+
                 {{Complaints.size}}
                 </div>
+                </a>
             </div>
         </div>
-        <div class="ui bottom attached button">
+        <a href="/domain/{{name}}">
+        <div class="ui bottom attached button" >
             <i class="folder open icon"></i>
             Open
         </div>
+        </a>
     </div>
 {{/domains}}
 </div>

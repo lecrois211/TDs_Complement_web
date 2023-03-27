@@ -1,0 +1,30 @@
+{{> main/header }}
+<span class="ui huge blue text">
+   <a href="/domain/{{CurrentDomain}}">{{CurrentDomain}}</a>
+</span>
+
+<table class ="ui celled structured table">
+    <thead>
+    <tr>
+        <th >Title</th>
+        <th> Description</th>
+        <th> User </th>
+        <th> Adresse du Provider </th>
+        <th> Domain </th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#complaints}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{user.username}}</td>
+        <td>{{provider.address}}</td>
+        <td>{{domain.name}}</td>
+    </tr>
+    {{/complaints}}
+    </tbody>
+
+</table>
+
+{{> main/footer }}

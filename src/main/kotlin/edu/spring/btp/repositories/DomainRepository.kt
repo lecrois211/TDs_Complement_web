@@ -18,7 +18,7 @@ interface DomainRepository:JpaRepository<Domain, Int> {
 
     fun findByParentIsNull():List<Domain>
 
-    fun findByParentId(id:Id):List<Domain>
+    fun findByParentId(id:Int):List<Domain>
 
 
 }
