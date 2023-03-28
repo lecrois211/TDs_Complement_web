@@ -4,14 +4,19 @@
         <label>Name</label>
         <input type="text" name="name" placeholder="Name">
     </div>
+    <div class="field">
+        <label>Description</label>
+        <input type="text" name="description" placeholder="description">
+    </div>
     <label> Provider </label>
     {{#providers}}
     <div class="ui grey message">
     <div class="ui radio checkbox">
-        <input type="radio" name="provider" id={{id}} checked="">
+        <input type="radio" name="provider" id="{{id}}" value="{{id}}" checked="">
         <label>{{address}}</label>
     </div>
     </div>
     {{/providers}}
+    <button type="submit" formaction="/complaints/{{domain}}/new">Valider</button>
 </form>
 {{> /main/footer }}

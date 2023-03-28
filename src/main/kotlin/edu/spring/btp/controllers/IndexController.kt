@@ -2,19 +2,24 @@ package edu.spring.btp.controllers;
 
 import edu.spring.btp.entities.Complaint
 import edu.spring.btp.entities.Domain
+import edu.spring.btp.entities.User
 import edu.spring.btp.repositories.ComplaintRepository
 import edu.spring.btp.repositories.DomainRepository
 import edu.spring.btp.repositories.ProviderRepository
+import edu.spring.btp.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView
 import java.security.Provider
 import java.security.Security
+import java.util.*
 
 @Controller
 class IndexController {
@@ -27,6 +32,9 @@ class IndexController {
 
     @Autowired
     lateinit var providerRepository: ProviderRepository
+
+    @Autowired
+    lateinit var userRepository: UserRepository
 
     @RequestMapping("/", "/index")
     fun indexFunction(model: ModelMap): String {
@@ -87,7 +95,30 @@ class IndexController {
     }
 
     @PostMapping("/complaints/{domain}/new")
-    fun AddComplaintsFunction(model: ModelMap, @PathVariable domain: String): String {
-    return "forms/complaint"
+    fun AddComplaintsFunction(model: ModelMap, @PathVariable domain: String, @ModelAttribute("name") title:String, @ModelAttribute("provider") providerId:String, @ModelAttribute("description") desc:String): RedirectView {
+        var ThisDomain : Domain = domainRepository.findByName(domain)
+        for (us:User in userRepository.findAll()) {
+            if (us.username == "anonymous"){
+                var provider : Optional<edu.spring.btp.entities.Provider> = providerRepository.findById(providerId.toInt())
+                var com : Complaint = Complaint(title, desc, us, provider.get(), ThisDomain)
+                us.complaints += com
+                ThisDomain.complaints += com
+                complaintRepository.save(com)
+            }
+        }
+        var user : User = User("anonymous")
+        user.role = "null"
+        user.email = "mail"
+        user.password = "pass"
+        user.username = "anonymous"
+        user.id = userRepository.findAll().lastIndex+1
+        var provider : Optional<edu.spring.btp.entities.Provider> = providerRepository.findById(providerId.toInt())
+        var com : Complaint = Complaint(title, desc, user, provider.get(), ThisDomain)
+        user.complaints += com
+        ThisDomain.complaints += com
+        userRepository.save(user)
+        complaintRepository.save(com)
+
+        return RedirectView("/complaints/$domain")
     }
 }
