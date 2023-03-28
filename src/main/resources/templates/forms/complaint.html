@@ -1,0 +1,17 @@
+{{> /main/header }}
+<form class="ui form" method="POST">
+    <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Name">
+    </div>
+    <label> Provider </label>
+    {{#providers}}
+    <div class="ui grey message">
+    <div class="ui radio checkbox">
+        <input type="radio" name="provider" id={{id}} checked="">
+        <label>{{address}}</label>
+    </div>
+    </div>
+    {{/providers}}
+</form>
+{{> /main/footer }}

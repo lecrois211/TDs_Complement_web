@@ -4,15 +4,17 @@ import edu.spring.btp.entities.Complaint
 import edu.spring.btp.entities.Domain
 import edu.spring.btp.repositories.ComplaintRepository
 import edu.spring.btp.repositories.DomainRepository
-import jakarta.persistence.Id
+import edu.spring.btp.repositories.ProviderRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.lang.ProcessBuilder.Redirect
+import java.security.Provider
+import java.security.Security
 
 @Controller
 class IndexController {
@@ -23,8 +25,11 @@ class IndexController {
     @Autowired
     lateinit var complaintRepository: ComplaintRepository
 
-    @RequestMapping("/","/index")
-    fun indexFunction(model: ModelMap):String{
+    @Autowired
+    lateinit var providerRepository: ProviderRepository
+
+    @RequestMapping("/", "/index")
+    fun indexFunction(model: ModelMap): String {
         val domains = domainRepository.findByParentName("Root")
         val count = domains.count()
         model["count"] = count
@@ -34,7 +39,7 @@ class IndexController {
     }
 
     @GetMapping("/domain/{name}")
-    fun domainFunction(model: ModelMap, @PathVariable name: String):String{
+    fun domainFunction(model: ModelMap, @PathVariable name: String): String {
         val domains = domainRepository.findByParentName(name)
         val count = domains.count()
         model["count"] = count
@@ -46,7 +51,7 @@ class IndexController {
     }
 
     @GetMapping("/complaints/{domain}")
-    fun complaintsFunction(model: ModelMap, @PathVariable domain: String):String{
+    fun complaintsFunction(model: ModelMap, @PathVariable domain: String): String {
         val domaine = domainRepository.findByName(domain)
         val complaints = domaine.complaints
         model["CurrentDomain"] = domain
@@ -55,20 +60,34 @@ class IndexController {
     }
 
     @GetMapping("/complaints/{domain}/sub")
-    fun SubcomplaintsFunction(model: ModelMap, @PathVariable domain: String):String{
+    fun SubcomplaintsFunction(model: ModelMap, @PathVariable domain: String): String {
         val domaine = domainRepository.findByParentName(domain)
-        val complaints : MutableList<Complaint> = domainRepository.findByName(domain).complaints
-        for(dom : Domain in domaine) {
+        val complaints: MutableList<Complaint> = domainRepository.findByName(domain).complaints
+        for (dom: Domain in domaine) {
             complaints += dom.complaints
         }
         model["CurrentDomain"] = domain
         model["complaints"] = complaints
         return "complaints"
     }
-/*
+
     @GetMapping("/complaints/{domain}/new")
+    fun NewComplaintsFunction(model: ModelMap, @PathVariable domain: String): String {
+        model["domain"]=domain
+        var thisDomain = domainRepository.findByName(domain)
+        model["username"]="Anonymous"
+        var providers = mutableListOf<edu.spring.btp.entities.Provider>()
+        for(aProvider in providerRepository.findAll()){
+            if(aProvider.domains.contains(thisDomain)){
+                providers.add(aProvider)
+            }
+        }
+        model["providers"]=providers
+        return "forms/complaint"
+    }
+
     @PostMapping("/complaints/{domain}/new")
-    fun NewComplaintsFunction(model : ModelMap, @PathVariable domain: String):String{
-        return "form/complaint"
-    }*/
+    fun AddComplaintsFunction(model: ModelMap, @PathVariable domain: String): String {
+    return "forms/complaint"
+    }
 }
