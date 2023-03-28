@@ -1,15 +1,24 @@
 {{> main/header }}
+<div>
 <span class="ui huge blue text">
    <a href="/domain/{{CurrentDomain}}">{{CurrentDomain}}</a>
 </span>
-
+</div>
+<div>
+<a href="/domain/{{CurrentDomain}}">
+    <button class="ui right labeled icon button">
+        <i class="left arrow icon"></i>
+        retour
+    </button>
+</a>
+</div>
 <table class ="ui celled structured table">
     <thead>
     <tr>
         <th >Title</th>
         <th> Description</th>
         <th> User </th>
-        <th> Adresse du Provider </th>
+        <th> Provider's Address </th>
         <th> Domain </th>
     </tr>
     </thead>

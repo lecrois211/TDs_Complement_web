@@ -1,5 +1,6 @@
 package edu.spring.btp.controllers;
 
+import edu.spring.btp.entities.Complaint
 import edu.spring.btp.entities.Domain
 import edu.spring.btp.repositories.ComplaintRepository
 import edu.spring.btp.repositories.DomainRepository
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
+import java.lang.ProcessBuilder.Redirect
 
 @Controller
 class IndexController {
@@ -50,4 +53,22 @@ class IndexController {
         model["complaints"] = complaints
         return "complaints"
     }
+
+    @GetMapping("/complaints/{domain}/sub")
+    fun SubcomplaintsFunction(model: ModelMap, @PathVariable domain: String):String{
+        val domaine = domainRepository.findByParentName(domain)
+        val complaints : MutableList<Complaint> = domainRepository.findByName(domain).complaints
+        for(dom : Domain in domaine) {
+            complaints += dom.complaints
+        }
+        model["CurrentDomain"] = domain
+        model["complaints"] = complaints
+        return "complaints"
+    }
+/*
+    @GetMapping("/complaints/{domain}/new")
+    @PostMapping("/complaints/{domain}/new")
+    fun NewComplaintsFunction(model : ModelMap, @PathVariable domain: String):String{
+        return "form/complaint"
+    }*/
 }
